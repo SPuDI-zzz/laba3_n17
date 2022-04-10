@@ -81,7 +81,7 @@ namespace laba3_n17
         static int[] Task(int inLength, int col, ref int[,] inArr, out int outLen)
         {
             int[] res = new int[inLength];
-            int curLen = 0, maxLen = 0, curMin = int.MaxValue;
+            int curLen = 0, maxLen = 0, curMin = int.MaxValue, index = 0;
             for (int i = 0; i < inLength; i++)
             {
                 if (inArr[i, col] < curMin)
@@ -91,17 +91,18 @@ namespace laba3_n17
                     if (curLen > maxLen)
                     {
                         maxLen = curLen;
-                        for (int k = 0; k < maxLen; k++)
-                        {
-                            res[k] = inArr[k, col];
-                        }
+                        index = i;
                     }
                 }
                 else
                 {
-                    curMin = int.MaxValue;
-                    curLen = 0;
+                    curMin = inArr[i, col];
+                    curLen = 1;
                 }
+            }
+            for (int k = 0, j = index - maxLen + 1; k < maxLen; k++, j++)
+            {
+                res[k] = inArr[j, col];
             }
             outLen = maxLen;
             return res;
@@ -144,8 +145,14 @@ namespace laba3_n17
                     Console.Write("\t" + inArr[i, j]);
                 Console.WriteLine();
             }*/
-
-            Console.WriteLine("Ответ:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(inArr[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
             for (int j = 0; j < n; j++)
             {
                 int[] outArr = Task(n, j, ref inArr, out int length);
